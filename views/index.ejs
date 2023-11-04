@@ -5,31 +5,15 @@
 </head>
 <body>
     <h1>Inventory Products and Prices</h1>
-    <button id="homeButton">Home</button>
     <button id="loadButton">Load</button>
     <div id="productList"></div> <!-- Initially, it's empty -->
-    
-    <!-- Home button to go back to the home page -->
-    <button id="homeButton" style="display: none;">Home</button>
 
     <!-- Copyright notice -->
     <p class="text-center text-muted">© Copyright 2023 XINGYAN LUO</p>
 
     <script>
-        // Function to toggle visibility of the "Home" button
-        function toggleHomeButton() {
-            const homeButton = document.getElementById('homeButton');
-            if (homeButton.style.display === 'none') {
-                homeButton.style.display = 'block';
-            } else {
-                homeButton.style.display = 'none';
-            }
-        }
-
         // Event listener for the "Load" button
         document.getElementById('loadButton').addEventListener('click', function () {
-            toggleHomeButton(); // Show the "Home" button after clicking "Load"
-
             // Implement logic to fetch data when the button is clicked
             fetch('https://dummyjson.com/products')
                 .then(response => response.json())
@@ -46,7 +30,7 @@
                             <p><strong>Price:</strong> $${product.price}</p>
                             <p><strong>Discount:</strong> ${product.discountPercentage}%</p>
                             <p><strong>Final Price:</strong> $${(product.price - (product.price * product.discountPercentage / 100)).toFixed(2)}</p>
-                            <img src="${product.thumbnail}" alt="Product Image" width="50px" height="50px" > <!-- Add product image -->
+                            <img src="${product.thumbnail}" alt="Product Image" width="50px" height="50px"> <!-- Add product image -->
                             <hr>
                         `;
 
@@ -56,12 +40,6 @@
                 .catch(error => {
                     console.error(error);
                 });
-        });
-
-        // Event listener for the "Home" button to go back to the home page
-        document.getElementById('homeButton').addEventListener('click', function () {
-            toggleHomeButton(); // Hide the "Home" button
-            document.getElementById('productList').innerHTML = ''; // Clear product information
         });
     </script>
 </body>

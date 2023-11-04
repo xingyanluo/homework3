@@ -1,27 +1,27 @@
 // Load the necessary modules
-var express = require('express');
-var app = express();
-var fetch = require('node-fetch');
+const express = require('express');
+const app = express();
+const axios = require('axios'); // Import Axios
 
 // Set the view engine to EJS and specify the views directory
 app.set('view engine', 'ejs');
 app.set('views', __dirname + '/views'); // Ensure views directory path is set correctly
 
-// Serve static files 
+// Serve static files
 app.use(express.static(__dirname + '/public'));
 
 // Routes
 
 // Index page
 app.get('/', function (req, res) {
-    res.render('index', { products: null }); // Initially, pass null to products
+    res.render('index', { products: null });
 });
 
 // Add a new route for fetching products from the API
 app.get('/getProducts', function (req, res) {
-    fetch('https://dummyjson.com/products')
-        .then(response => response.json())
-        .then(data => {
+    axios.get('https://dummyjson.com/products')
+        .then(response => {
+            const data = response.data;
             const products = data.products.map(product => ({
                 title: product.title,
                 price: product.price,
@@ -30,7 +30,7 @@ app.get('/getProducts', function (req, res) {
                 thumbnail: product.thumbnail
             }));
 
-            res.json({ products }); // Send JSON response with products
+            res.json({ products });
         })
         .catch(error => {
             console.error(error);
