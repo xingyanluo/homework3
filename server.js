@@ -7,7 +7,7 @@ var fetch = require('node-fetch');
 app.set('view engine', 'ejs');
 app.set('views', __dirname + '/views'); // Ensure views directory path is set correctly
 
-// Serve static files (if you have any)
+// Serve static files 
 app.use(express.static(__dirname + '/public'));
 
 // Routes
