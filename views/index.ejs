@@ -26,6 +26,7 @@
                             <p><strong>Price:</strong> $${product.price}</p>
                             <p><strong>Discount:</strong> ${product.discountPercentage}%</p>
                             <p><strong>Final Price:</strong> $${(product.price - (product.price * product.discountPercentage / 100)).toFixed(2)}</p>
+                            <img src="${product.thumbnail}" alt="Product Image"> <!-- Add product image -->
                             <hr>
                         `;
 
