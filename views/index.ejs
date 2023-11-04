@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Inventory Products</title>
+    <style>
+        /* Styling for the "Load" button */
+        #loadButton {
+            background-color: #0074d9; /* Blue background color */
+            color: #ffffff; /* White text color */
+            padding: 10px 20px;
+            border: none;
+            cursor: pointer;
+        }
+
+        #loadButton:hover {
+            background-color: #0056b3; /* Darker blue when hovered */
+        }
+
+        /* Styling for the product list */
+        #productList {
+            display: none; /* Initially hidden */
+            margin-top: 20px;
+        }
+
+        /* Styling for product details */
+        .product {
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <button id="loadButton">Load</button>
+    <h1>Our Inventory:</h1>
+    <div id="productList">
+        <!-- Dynamic product information will be inserted here -->
+    </div>
+
+    <script>
+        document.getElementById('loadButton').addEventListener('click', function () {
+            // Implement logic to fetch data from the API when the button is clicked
+            fetch('/getProducts')
+                .then(response => response.json())
+                .then(data => {
+                    const productList = document.getElementById('productList');
+
+                    // Clear existing product information
+                    productList.innerHTML = '';
+
+                    // Loop through the retrieved products and display them
+                    data.products.forEach(product => {
+                        const productDiv = document.createElement('div');
+                        productDiv.classList.add('product');
+                        productDiv.innerHTML = `
+                            <p><strong>${product.title}</strong> - price: ${product.price}</p>
+                            <p>discount: ${product.discountPercentage}% - final price: ${(product.price - (product.price * product.discountPercentage / 100)).toFixed(2)}</p>
+                        `;
+
+                        productList.appendChild(productDiv);
+                    });
+
+                    // Display the product list
+                    productList.style.display = 'block';
+                })
+                .catch(error => {
+                    console.error(error);
+                });
+        });
+    </script>
+</body>
+</html>
